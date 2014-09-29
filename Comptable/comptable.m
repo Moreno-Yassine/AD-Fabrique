@@ -6,7 +6,8 @@ function [ x ] = comptable( A, B )
 %-73A - 54B - 31C -115D -48E -117F
 
 f = [-73; -54; -31; -115; -48; -117];
-x = linprog(f, A, B); 
+lb = [0;0;0;0;0;0];
+x = linprog(f, A, B,[],[],lb,[]); 
 
 end
 

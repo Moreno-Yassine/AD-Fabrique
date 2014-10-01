@@ -20,7 +20,7 @@ lb = [0;
 
 matrice;
 
-X=linprog(F, Aeq, beq, [], [], lb, []);
+X=linprog(F, Aeq, Beq, [], [], lb, []);
 
 end
 

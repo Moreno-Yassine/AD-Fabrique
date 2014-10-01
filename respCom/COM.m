@@ -1,4 +1,4 @@
-function [ X ] = COM( A, B)
+function [ X ] = COM( A, B, Aeq, Beq)
 %fonction pour minimiser l'ecart de prod entre les deux categorie de
 %produit
 
@@ -20,7 +20,7 @@ lb = [0;
 
 matrice;
 
-X=linprog(F, Aeq, Beq, [], [], lb, []);
+X=linprog(F, A, B, Aeq, Beq, lb, []);
 
 end
 

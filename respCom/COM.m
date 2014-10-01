@@ -18,7 +18,6 @@ lb = [0;
     0;
     ];
 
-matrice;
 
 X=linprog(F, A, B, Aeq, Beq, lb, []);
 

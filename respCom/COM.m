@@ -5,9 +5,9 @@ function [ X ] = COM( A, B)
 F=[1 ;
     1;
     1; 
-    -1; 
-    -1;
-    -1;
+    1; 
+    1;
+    1;
     ];
 
 lb = [0;
@@ -20,7 +20,7 @@ lb = [0;
 
 matrice;
 
-X=linprog(F, A, B, [], [], lb, []);
+X=linprog(F, Aeq, beq, [], [], lb, []);
 
 end
 

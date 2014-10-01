@@ -1,4 +1,4 @@
-%%Matrice de contraintes
+%%Matrice de contraintes (inégalités)
 
 A=[
     1 2 1 5 1 2;

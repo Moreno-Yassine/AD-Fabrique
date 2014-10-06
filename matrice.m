@@ -15,7 +15,7 @@ A=[
 
 B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800];
 
-%%Matrice de contraintes (égalités)  
+%%Matrice de contraintes Commercial(égalités)  
 
 Aeq=[1 1 1 -1 -1 -1];
 

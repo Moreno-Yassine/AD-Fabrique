@@ -3,11 +3,13 @@ function [ x ] = comptable( A, B )
 %   Detailed explanation goes here
 
 %Equation 
-%-73A - 54B - 31C -115D -48E -117F
+%5.67A + 12.38B + 12.27C + 1.03D + 31.65E + 27.55F
 
-f = [-73; -54; -31; -115; -48; -117];
+f = [-5.67; -12.38; -12.27; -1.03; -31.65; -27.55];
 lb = [0;0;0;0;0;0];
-x = linprog(f, A, B,[],[],lb,[]); 
+x = linprog(f, A, B,[],[],lb); 
 
+
+result = f' * x
 end
 

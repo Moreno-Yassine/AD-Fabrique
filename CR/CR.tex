@@ -18,10 +18,10 @@
 \renewcommand*{\familydefault}{\sfdefault}
 
 
-\title{Aide à la Décision}
+\title{Rapport D'Analyse}
 
 
-\author{Moreno Yassine \cr Mehdi Kitane \cr Amine ElRhazi \cr Abdelalim Tribak \cr Meryem Benchakroune \cr Karim Benhmida}
+\author{Yassine Moreno \cr Mehdi Kitane \cr Amine ElRhazi \cr Abdelalim Tribak \cr Meryem Benchakroune \cr Karim Benhmida}
 
 \begin{document}
 
@@ -44,7 +44,7 @@ On considèrera dans tout ce qui suit : \\
         d\\
         e\\
         f\\
-    \end{pmatrix}$ le vecteur définissant la quantité à fabriquer pour chaque produit (\textbf{variables de décision}).\\
+    \end{pmatrix}$ le vecteur définissant la quantité hebdomadaire à fabriquer pour chaque produit (\textbf{variables de décision}).\\
 - $Mchn = \left\{1, 2, 3, 4, 5, 6, 7\right\}$ l'ensemble des machines utilisées dans la fabrication des produits.\\
 - $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.\\
 ...
@@ -65,7 +65,6 @@ $G(X) =  20\cdot a + 27\cdot b + 26\cdot c + 30\cdot d + 45\cdot e + 40\cdot f $
 $C(X) = C_{mtrprem}(X) + C_{machines}(X) $ \\ 
 Pour les matières premières :
 $C_{mtrprem}(X) = \sum_{i\in{X}}{Cmtp_i\cdot i} $ \\
-
 $Prix = \begin{pmatrix}
         3\\
         4\\
@@ -106,7 +105,6 @@ $$
 \end{array}
 $$
 D'où : $C_{machines}(X) = 1.33\cdot a + 1.11\cdot b + 0.73\cdot c + 1.96\cdot d + 1.35\cdot e + 2.45\cdot f  $ \\
-
 Ainsi, nous pouvons déduire la fonction objectif -traduisant le bénéfice- à maximiser :
 \begin{center}
 $F_{compta} (X) = (5.67~12.38~12.27~1.03~31.65~27.55)\cdot X$ \\
@@ -133,19 +131,15 @@ $ X =\begin{pmatrix}
 242.50\\
 87.96
 \end{pmatrix} $\\
-
 Le bénéfice maximal envisageable est de : \textbf{10390 €}
-
-
 \subsection{Modélisation et Proposition de solution : Resp.Atelier}
 L'objectif du responsable d'atelier est de maximiser la fabrication des produits. Autrement dit, maximiser la quantité totale des produits. 
 Nous modéliserons la fonction objectif sous la forme suivante :
 \begin{center}
 $F_{respAtelier} (X) =(1~1~1~1~1~1)\cdot X$ \\
 \end{center}
-
 Ainsi, le problème est réduit à une fonction $f$ à minimiser tout en tenant compte des contraintes globales précédentes :
-$f(X) = F_{respAtelier} (X) =(-1~-1~-1~-1~-1~-1)\cdot X$ \\
+$f(X) = -F_{respAtelier} (X) =(-1~-1~-1~-1~-1~-1)\cdot X$ \\
 $$
 avec \left\{\begin{split}
 	f(X)\ à\ minimiser\\
@@ -163,9 +157,7 @@ $ X =\begin{pmatrix}
 184.46\\
 98.92
 \end{pmatrix} $\\
-
-La production maximale envisageable est de : \textbf{378.8 Produits}\\
-
+La production maximale envisageable est de : \textbf{378.8 Produits}
 \subsection{Modélisation et Proposition de solution : Resp.Stock}
 La problématique du responsable des stocks est double, puisqu'il s'agit de minimiser le stock global de l'entreprise tout en préservant un niveau minimal d'activité au sein de l'entreprise.\\
 Nous nous attaquerons dans un premier temps à la fonction objectif , obtenu par la somme des quantités des produits et des quantités de matières premières pour chaque produit :
@@ -179,9 +171,85 @@ De ce fait, afin de contourner le problème, nous ajouterons 2 contraintes suppl
 \textbf{a+b+c+d+e+f < 378.8}\\
 - La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
 \textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
-	 
+\\
+En intégrant les nouvelles contraintes au jeu établi précédemment, nous avons pu modéliser l'évolution du stock global $F_{respStock} (X)$ en fonction du pourcentage $\%prodMax$ de la production maximale imposé en seuil minimal d'activité (cf. Figure 1).\\
+\begin{figure}[position]
+    \begin{center}
+        \includegraphics[scale=0.35]{Stock}
+        \caption{
+            \label{fig} Évolution du stock en fonction de \%prodMax
+        }
+    \end{center}
+\end{figure}
+Ainsi, nous constatons un point d'inflexion établi à \textbf{47\%} de la production maximale. Au delà, on constate une augmentation très rapide du stock qui ne satisfait nullement l'objectif fixé.
+C'est à partir de ce point particulier que nous construirons notre solution au problème suivant :
+$f(X) = F_{respStock} (X) =(5~5~6~10~5~4)\cdot X$ \\
+$$
+avec \left\{\begin{split}
+	f(X)\ à\ minimiser\\
+    A_{new}\cdot X \leq b_{new}\\
+    0 \leq X
+\end{split}\right.
+$$
+La solution optimale pour ce problème est la suivante :
+$ X =\begin{pmatrix}
+0\\
+0\\
+0\\
+0\\
+3.03\\
+175
+\end{pmatrix} $\\
+Le stock minimal obtenu par ces données est de : \textbf{715 unités}
+
 \subsection{Modélisation et Proposition de solution : Resp.Commercial}
+Le responsable commercial a pour objectif la réalisation de l'équilibre entre la première famille de produits (A,B et C) et la seconde (D,E et F). Cette contrainte d'égalité se modélise par l'équation suivante :
+\begin{center}
+$ a+ b+ c = d+ e+ f $
+\end{center}
+Le fonction objectif du responsable commercial demeure identique à celle du responsable d'atelier, maximiser la production de l'entreprise -pour assurer l'activité de l'entreprise- tout en tenant compte de la nouvelle contrainte d'équilibre.
+\begin{center}
+$F_{respComm} (X) =(1~1~1~1~1~1)\cdot X$ \\
+\end{center}
+Ainsi, le problème est mathématiquement réduit à une fonction $f$ à minimiser tout en tenant compte des contraintes globales précédentes en plus de la nouvelle contrainte d'équilibre :
+$f(X) = -F_{respComm} (X) =(-1~-1~-1~-1~-1~-1)\cdot X$ \\
+$$
+avec \left\{\begin{split}
+	f(X)\ à\ minimiser\\
+    A\cdot X \leq b\\
+    A_{eq}\cdot X = b_{eq}\\
+    0 \leq X
+\end{split}\right.
+$$
+La solution optimale pour ce problème est la suivante :
+$ X =\begin{pmatrix}
+142.11\\
+0\\
+44.42\\
+0\\
+104.80\\
+81.73
+\end{pmatrix} $\\
+
+La production de la première famille s'élève à \textbf{186.53 unités}\\
+La production de la deuxième famille s'élève à \textbf{186.53 unités}\\
+L'écart théorique constaté entre ces deux familles est de : \textbf{0 unités}
 \subsection{Modélisation et Proposition de solution : Resp.Personnel}
+La problématique du responsable du personnel concerne la réduction de l'usage des machines 3 et 5 tout en maintenant une activité correcte de l'entreprise.
+La fonction objectif modélisant le problème se retranscrit sous la forme suivante :
+\begin{center}
+$F_{respPers} (X) =F_{TmpsMachine3} (X) + F_{TmpsMachine5} (X)$\\
+$F_{TmpsMachine3} (X) = (8~1~11~0~10~25)\cdot X$\\
+$F_{TmpsMachine5} (X) = (5~0~0~7~10~25)\cdot X$\\
+$F_{respPers} (X) =(13~1~11~7~20~50)\cdot X$
+\end{center}
+
+Cependant, le minimum envisageable pour cette fonction est le vecteur nul, solution absurde pour assurer l'activité de l'entreprise. Ainsi, de manière identique au problème du responsable des stocks, nous ajouterons 2 contraintes supplémentaires liées à l'activité maximale de l'entreprise.
+- La première contrainte, qui concerne la production maximale, se traduit par l'inégalité suivante :
+\textbf{a+b+c+d+e+f < 378.8}\\
+- La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
+\textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
+
 
 \section{Programmation Linéaire Multicritère}
 

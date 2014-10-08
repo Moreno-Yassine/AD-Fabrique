@@ -33,20 +33,153 @@
 \newpage
 
 \section{Introduction}
-test
 \subsection{Mise en situation}
 \subsection{Concepts généraux et Contraintes}
 \subsection*{Concepts généraux}
-On considèrera dans tout ce qui suit : 
-- $X = \left\{a, b, c, d, e, f\right\}$ le vecteur définissant la quantité à fabriquer pour chaque produit.  \\
-- $Mchn = \left\{1, 2, 3, 4, 5, 6, 7\right\}$ l'ensemble des machines utilisées dans la fabrication des produits.  \\
-
+On considèrera dans tout ce qui suit : \\
+- $X = \begin{pmatrix}
+        a\\
+        b\\
+        c\\
+        d\\
+        e\\
+        f\\
+    \end{pmatrix}$ le vecteur définissant la quantité à fabriquer pour chaque produit (\textbf{variables de décision}).\\
+- $Mchn = \left\{1, 2, 3, 4, 5, 6, 7\right\}$ l'ensemble des machines utilisées dans la fabrication des produits.\\
+- $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.\\
+...
 \subsection*{Jeu de contraintes}
-
+... \\
 \section{Programmation Linéaire Monocritère}
 \subsection{Modélisation et Proposition de solution : Comptable}
+L'objectif du comptable est de maximiser le bénéfice, ce dernier est obtenu par la différence entre le revenu global $G$ et des charges totales $C$  liées à l'achat des matières premières et du cout d'usinage sur les machines de l'entreprise.\\
+Ainsi la fonction objectif du problème de comptabilité se modélise sous la forme suivante :
+\begin{center}
+$F_{compta} (X) = G(X) - C(X)$ \\
+\end{center}
+En considérant les fonctions suivantes : \\
+- Le revenu global :\\
+$G(X) = (20~27~26~30~45~40)\cdot X $ \\
+$G(X) =  20\cdot a + 27\cdot b + 26\cdot c + 30\cdot d + 45\cdot e + 40\cdot f $ \\
+- Les charges totales :\\
+$C(X) = C_{mtrprem}(X) + C_{machines}(X) $ \\ 
+Pour les matières premières :
+$C_{mtrprem}(X) = \sum_{i\in{X}}{Cmtp_i\cdot i} $ \\
+
+$Prix = \begin{pmatrix}
+        3\\
+        4\\
+        2\\
+    \end{pmatrix}$
+$$
+\begin{array}{r l}
+    Cmtp_a = & (1~2~1)\cdot Prix = 13 \\
+    Cmtp_b = & (2~2~0)\cdot Prix = 14 \\
+    Cmtp_c = & (1~1~3)\cdot Prix = 15 \\
+    Cmtp_d = & (5~2~2)\cdot Prix = 27 \\
+    Cmtp_e = & (0~2~2)\cdot Prix = 12 \\
+    Cmtp_f = & (2~1~0)\cdot Prix = 10 \\
+\end{array}
+$$
+\\
+D'où : $C_{mtrprem}(X) = 13\cdot a + 14\cdot b + 15\cdot c + 27\cdot d + 12\cdot e + 10\cdot f  $ \\
+Pour les couts d'usinage :\\
+$C_{machines}(X) = \sum_{i\in{X}}{Cmachines_i\cdot i} $ \\
+
+$CoutMinute = \begin{pmatrix}
+        0.03\\
+        0.03\\
+        0.017\\
+        0.017\\
+        0.03\\
+        0.05\\
+        0.05\\
+    \end{pmatrix}$
+$$
+\begin{array}{r r l l}
+    Cmachines_a = & (8~7~8~2~5~5~5)\cdot  & CoutMinute = & 1.33 \\
+    Cmachines_b = & (15~1~1~10~0~5~3)\cdot   & CoutMinute = & 1.11 \\
+    Cmachines_c = & (0~2~11~5~0~3~5)\cdot   & CoutMinute = & 0.73 \\
+    Cmachines_d = & (5~15~0~4~7~12~8)\cdot   & CoutMinute = & 1.96 \\
+    Cmachines_e = & (0~7~10~13~10~8~0)\cdot  & CoutMinute = & 1.35 \\
+    Cmachines_f = & (10~12~25~7~25~0~7)\cdot & CoutMinute = & 2.45 \\
+\end{array}
+$$
+D'où : $C_{machines}(X) = 1.33\cdot a + 1.11\cdot b + 0.73\cdot c + 1.96\cdot d + 1.35\cdot e + 2.45\cdot f  $ \\
+
+Ainsi, nous pouvons déduire la fonction objectif -traduisant le bénéfice- à maximiser :
+\begin{center}
+$F_{compta} (X) = (5.67~12.38~12.27~1.03~31.65~27.55)\cdot X$ \\
+\end{center}
+
+De ce fait, nous avons effectué cette démarche en minimisant la fonction suivante tout en intégrant les contraintes spécifiés précédemment :
+\begin{center}
+$f(X) = -F_{compta} (X) = (-5.67~-12.38~-12.27~-1.03~-31.65~-27.55)\cdot X$ \\
+\end{center}
+$$
+avec \left\{\begin{split}
+	f(X)\ à\ minimiser\\
+    A\cdot X \leq b\\
+    0 \leq X
+\end{split}\right.
+$$
+
+La solution proposée est la suivante :
+$ X =\begin{pmatrix}
+0\\
+23.52\\
+0\\
+0\\
+242.50\\
+87.96
+\end{pmatrix} $\\
+
+Le bénéfice maximal envisageable est de : \textbf{10390 €}
+
+
 \subsection{Modélisation et Proposition de solution : Resp.Atelier}
+L'objectif du responsable d'atelier est de maximiser la fabrication des produits. Autrement dit, maximiser la quantité totale des produits. 
+Nous modéliserons la fonction objectif sous la forme suivante :
+\begin{center}
+$F_{respAtelier} (X) =(1~1~1~1~1~1)\cdot X$ \\
+\end{center}
+
+Ainsi, le problème est réduit à une fonction $f$ à minimiser tout en tenant compte des contraintes globales précédentes :
+$f(X) = F_{respAtelier} (X) =(-1~-1~-1~-1~-1~-1)\cdot X$ \\
+$$
+avec \left\{\begin{split}
+	f(X)\ à\ minimiser\\
+    A\cdot X \leq b\\
+    0 \leq X
+\end{split}\right.
+$$
+
+La solution proposée est la suivante :
+$ X =\begin{pmatrix}
+0\\
+56.73\\
+38.69\\
+0\\
+184.46\\
+98.92
+\end{pmatrix} $\\
+
+La production maximale envisageable est de : \textbf{378.8 Produits}\\
+
 \subsection{Modélisation et Proposition de solution : Resp.Stock}
+La problématique du responsable des stocks est double, puisqu'il s'agit de minimiser le stock global de l'entreprise tout en préservant un niveau minimal d'activité au sein de l'entreprise.\\
+Nous nous attaquerons dans un premier temps à la fonction objectif , obtenu par la somme des quantités des produits et des quantités de matières premières pour chaque produit :
+\begin{center}
+$F_{respStock} (X) =(1~1~1~1~1~1)+(4~4~5~9~4~3)\cdot X$ \\
+$F_{respStock} (X) =(5~5~6~10~5~4)\cdot X$\\
+\end{center}
+Néanmoins, cette fonction -à minimiser- admet le vecteur nul comme solution minimale, réduisant à néant la productivité de l'entreprise.\\
+De ce fait, afin de contourner le problème, nous ajouterons 2 contraintes supplémentaires concernant la production totale de l'entreprise pour traduire l'activité.\\
+- La première contrainte, qui concerne la production maximale, se traduit par l'inégalité suivante :
+\textbf{a+b+c+d+e+f < 378.8}\\
+- La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
+\textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
+	 
 \subsection{Modélisation et Proposition de solution : Resp.Commercial}
 \subsection{Modélisation et Proposition de solution : Resp.Personnel}
 

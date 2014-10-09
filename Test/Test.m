@@ -40,18 +40,23 @@ lb = [0;0];
 f3 = [-20;-15];
 x3 = linprog(f3,A,B,[],[],lb,[])
 
-
+ZZZ1 = -f3' * x3
+ZZZ2 = -f2' * x3
 %Calcul Matrice de Gain 
 F = [f3 f2];
 X = [x3 x2];
 Gain = -X'*F
 
+%Matrice de Satisfaction
+Satisfaction = zeros(2,2);
+Satisfaction(:,1) = Gain(:,1)/Gain(1,1)
+Satisfaction(:,2) = Gain(:,2)/Gain(2,2)
 
-Xplot = Gain(:,1)
-Yplot = Gain(:,2)
-
-plot(Xplot,Yplot, '*' , 13000,4200,  '*')
-axis([0,16000,0,5000])
+% Xplot = Gain(:,1)
+% Yplot = Gain(:,2)
+% 
+% plot(Xplot,Yplot, '*' , 13000,4200,  '*')
+% axis([0,16000,0,5000])
 
 hold off
 end

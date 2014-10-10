@@ -10,6 +10,6 @@ lb = [0;0;0;0;0;0];
 x = linprog(f, A, B,[],[],lb); 
 
 
-result = f' * x
+result = -f' * x
 end
 

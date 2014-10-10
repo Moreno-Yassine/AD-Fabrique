@@ -1,6 +1,5 @@
 function [] = Partie2()
 
-%-------------------------Anciennes Reponses-----------------------------%
 F_compta = [-5.67; -12.38; -12.27; -1.03; -31.65; -27.55];
 F_respAtelier = [-1; -1; -1; -1; -1; -1];
 F_respStock = [-5; -5; -6; -10; -5; -4];
@@ -19,19 +18,24 @@ Solt = [sol_compta,sol_respAtelier,sol_respStock,sol_respCom,sol_respPers];
 
 %Point de Mire : 
 PM = [10389; 378.8; 1385; 0; 2887.9]; 
-Gain = -transpose(Solt)*Ft;
+Gain = -transpose(Solt)*Ft
 
 %Matrice de Satisfaction
 Satisfaction = zeros(5,5);
-for i=1:3;
-    Satisfaction(:,i) = Gain(:,i)/Gain(i,i);
+Satisfaction(:,1) = Gain(:,1)./Gain(1,1);
+Satisfaction(:,2) = Gain(:,2)./Gain(2,2);
+Satisfaction(:,3) = Gain(3,3)./Gain(:,3);
+for i=1:5;
+    sol1 = (Solt(1,i) + Solt(2,i) + Solt(3,i)) / (Solt(4,i) + Solt(5,i) + Solt(6,i));
+    sol2 = (Solt(4,i) + Solt(5,i) + Solt(6,i)) / (Solt(1,i) + Solt(2,i) + Solt(3,i));
+    if sol1<1
+        Satisfaction(i,4) = sol1;
+    else
+        Satisfaction(i,4) = sol2;
+    end
 end
-    Satisfaction(:,4) = Gain(:,4);
-for i=5:5;
-    Satisfaction(:,i) = Gain(:,i)/Gain(i,i);
-end
-Satisfaction;
-    
+Satisfaction(:,5) = Gain(5,5)./Gain(:,5);
+Satisfaction
 
 
 %On place Tous les responsables sauf le compta en contrainte, 

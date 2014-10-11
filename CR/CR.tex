@@ -49,7 +49,56 @@ On considèrera dans tout ce qui suit : \\
 - $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.\\
 ...
 \subsection*{Jeu de contraintes}
-... \\
+Nous détaillerons dans cette section les contraintes imposées par les différents constituants de l'entreprise FaBrique. \\
+Tout d'abord, les contraintes de domaine stipulent que toutes les quantités hebdomadaires à fabriquer par l'entreprise doivent être positifs ou nuls, ce qui peut se traduire par l'inégalité suivante :
+\begin{center}
+$$0 \leq X \Leftrightarrow 0 \leq a ,0 \leq b ,0 \leq c ,0 \leq d ,0 \leq e ,0 \leq f $$
+\end{center}
+Ensuite, les contraintes imposées par la quantité maximale de matières premières admissible : \textbf{350 unités pour MP1, 620 unités pour MP2 et 485 unités pour MP3}. Ces contraintes se traduiront par les inégalités suivantes :
+$$
+\left\{\begin{split}
+	a+2b+c+5d+2f \leq 350 \\
+    2a+2b+c+2d+2e+f  \leq 620 \\
+    a+3c+2d+2e \leq 485 \\
+\end{split}\right. \Leftrightarrow \begin{pmatrix}
+        1&2&1&5&0&2 \\
+        2&2&1&2&2&1\\
+        1&0&3&2&2&0\\
+    \end{pmatrix} \cdot X \leq \begin{pmatrix}
+        350 \\
+        620\\
+        485\\
+    \end{pmatrix}
+$$
+Enfin, les contraintes traduisant le volume horaire \textbf{hebdomadaire} maximal du fonctionnement des machines, ne dépassant pas 16 heures par jour, 5 jours par semaine -un total de \textbf{4800 minutes} hebdomadaires-.
+$$
+\left\{\begin{split}
+	8a+15b+5d+10f \leq 4800 \\
+    7a+b+2c+15d+7e+12f \leq 4800 \\
+    8a+b+11c+10e+25f \leq 4800 \\
+    2a+10b+5c+4d+13e+7f \leq 4800 \\
+    5a+7d+10e+27f \leq 4800 \\
+	5a+3b+5c+8d+7f \leq 4800\\
+	5a+5b+3c+12d+8e \leq 4800\\
+\end{split}\right. \Leftrightarrow \begin{pmatrix}
+        8&15&0&5&0&10 \\
+        7&1&2&15&7&12\\
+        8&1&11&0&10&25\\
+        2&10&5&4&13&7\\
+        5&0&0&7&10&27\\
+        5&3&5&8&0&7\\
+        5&5&3&12&8&0
+    \end{pmatrix} \cdot X \leq \begin{pmatrix}
+        4800\\
+        4800\\
+        4800\\
+        4800\\
+        4800\\
+        4800\\
+        4800
+    \end{pmatrix}
+$$ 
+
 \section{Programmation Linéaire Monocritère}
 \subsection{Modélisation et Proposition de solution : Comptable}
 L'objectif du comptable est de maximiser le bénéfice, ce dernier est obtenu par la différence entre le revenu global $G$ et des charges totales $C$  liées à l'achat des matières premières et du cout d'usinage sur les machines de l'entreprise.\\
@@ -172,7 +221,7 @@ De ce fait, afin de contourner le problème, nous ajouterons 2 contraintes suppl
 - La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
 \textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
 \\
-En intégrant les nouvelles contraintes au jeu établi précédemment, nous avons pu modéliser l'évolution du stock global $F_{respStock} (X)$ en fonction du pourcentage $\%prodMax$ de la production maximale imposé en seuil minimal d'activité (cf. Figure 1).\\
+En intégrant les nouvelles contraintes au jeu établi précédemment par le biais de \textbf{$A_{new}$} et de \textbf{$b_{new}$} , nous avons pu modéliser l'évolution du stock global $F_{respStock} (X)$ en fonction du pourcentage $\%prodMax$ de la production maximale imposé en seuil minimal d'activité (cf. Figure 1).\\
 \begin{figure}[position]
     \begin{center}
         \includegraphics[scale=0.35]{Stock}
@@ -205,7 +254,7 @@ Le stock minimal obtenu par ces données est de : \textbf{715 unités}
 \subsection{Modélisation et Proposition de solution : Resp.Commercial}
 Le responsable commercial a pour objectif la réalisation de l'équilibre entre la première famille de produits (A,B et C) et la seconde (D,E et F). Cette contrainte d'égalité se modélise par l'équation suivante :
 \begin{center}
-$ a+ b+ c = d+ e+ f $
+$ a+ b+ c = d+ e+ f\Leftrightarrow(1~1~1~-1~-1~-1)\cdot X = 0 \Leftrightarrow A_{eq}\cdot X = b_{eq} $
 \end{center}
 Le fonction objectif du responsable commercial demeure identique à celle du responsable d'atelier, maximiser la production de l'entreprise -pour assurer l'activité de l'entreprise- tout en tenant compte de la nouvelle contrainte d'équilibre.
 \begin{center}
@@ -230,7 +279,6 @@ $ X =\begin{pmatrix}
 104.80\\
 81.73
 \end{pmatrix} $\\
-
 La production de la première famille s'élève à \textbf{186.53 unités}\\
 La production de la deuxième famille s'élève à \textbf{186.53 unités}\\
 L'écart théorique constaté entre ces deux familles est de : \textbf{0 unités}
@@ -249,7 +297,37 @@ Cependant, le minimum envisageable pour cette fonction est le vecteur nul, solut
 \textbf{a+b+c+d+e+f < 378.8}\\
 - La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
 \textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
-
+A partir du jeu de contraintes modifié interprété par \textbf{$A_{new}$} et de \textbf{$b_{new}$}, nous pouvons établir une relation traduisant l'impact du seuil minimal sur les temps d'usinage des machines 3 et 5 ainsi que sur le temps d'utilisation global (cf. Figure 2)\\
+%\begin{figure}[position]
+ %   \begin{center}
+  %      \includegraphics[scale=0.35]{Stock}
+   %     \caption{
+    %        \label{fig} Évolution du stock en fonction de \%prodMax
+    %    }
+    %\end{center}
+%\end{figure}
+A partir de l'analyse des graphiques produits, nous déduisons que la solution optimale pour cette problématique s'établit à \textbf{82\%} de la production maximale, assurant un compromis idéal entre l'utilisation maximale des deux machines et l'utilisation indépendante de chacune d'entre elles.
+Cette condition supplémentaire nous permettra de construire notre solution au problème suivant :
+$f(X) = F_{respPers} (X) =(13~1~11~7~20~50)\cdot X$ \\
+$$
+avec \left\{\begin{split}
+	f(X)\ à\ minimiser\\
+    A_{new}\cdot X \leq b_{new}\\
+    0 \leq X
+\end{split}\right.
+$$
+La solution optimale pour ce problème est la suivante :
+$ X =\begin{pmatrix}
+0\\
+174.38\\
+1.23\\
+0\\
+135\\
+0
+\end{pmatrix} $\\
+Le temps total minimal obtenu est de : \textbf{2887.9 mn}\\
+Le temps minimal de la machine 3 obtenu est de : \textbf{1537.9 mn}\\
+Le temps minimal de la machine 5 obtenu est de : \textbf{1350 mn}
 
 \section{Programmation Linéaire Multicritère}
 

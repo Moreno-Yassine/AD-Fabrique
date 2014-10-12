@@ -77,7 +77,7 @@ $$
     7a+b+2c+15d+7e+12f \leq 4800 \\
     8a+b+11c+10e+25f \leq 4800 \\
     2a+10b+5c+4d+13e+7f \leq 4800 \\
-    5a+7d+10e+27f \leq 4800 \\
+    5a+7d+10e+25f \leq 4800 \\
 	5a+3b+5c+8d+7f \leq 4800\\
 	5a+5b+3c+12d+8e \leq 4800\\
 \end{split}\right. \Leftrightarrow \begin{pmatrix}
@@ -330,6 +330,138 @@ Le temps minimal de la machine 3 obtenu est de : \textbf{1537.9 mn}\\
 Le temps minimal de la machine 5 obtenu est de : \textbf{1350 mn}
 
 \section{Programmation Linéaire Multicritère}
+\subsection{Introduction}
+Nous considérons à present le point de vue du directeur d’entreprise. Son objectif est de contenter tous les responsables en satisfaisant au mieux possible les critères de chacun.
+
+\subsection{Matrice de Gain}
+Nous commençons par representer la matrice de Gain.\\
+La matrice de Gain correspond aux valeurs obtenues pour les objectifs de chaque responsable en fonction du cas idéal d’un responsable. Elle est générée à partir des résultats de la partie 1, c’est à dire aux choix d’une programmation mono-critère.
+En récupérant les fonctions objectifs de chaque responsable et en récupérant les solutions optimales de chaque responsable, nous pouvons donc calculer la matrice de gain.
+
+$ Gain=\begin{pmatrix}
+10512 &357 &1691 &-316 &9579\\
+9712 &379 &1834 &-188 &9118\\
+7557 &303 &1385 &-175 &9219\\
+6920 &373 &1828 &0 &8519\\
+6359 &311 &1554 &41 &2888\\
+\end{pmatrix} $\\
+
+
+La première colonne correspond au benefice obtenu en tenant compte de la solution optimale de chaque responsable.
+La deuxième correspond quand à elle au nombre de produit à fabriquer.
+La troisième quand à elle correspond au nombre de produit dans le stock tandis que la quatrième correspond à la difference de quantité de produit fabriqué entre les deux familles.
+Finalement, la 5ème correspond aux temps d’utilisation des machines 3 et 5.
+
+La diagonal correspond au point de Mire, c’est à dire, le résultat optimal que voudrais atteindre le responsable de l’entreprise. Nous devons donc essayer de nous y approcher le plus possible.
+
+$ PM = \begin{pmatrix}
+10512\\
+378.8\\
+1385\\
+0\\
+2887.9\\
+\end{pmatrix} $
+
+\subsection{Application de la Programation Lineaire Multicritere}
+Nous allons à present considerer le bénéfice de l’entreprise comme variable à modifier et placer les autres variable en contrainte. Nous pouvons alors jouer sur les différentes valeurs pour essayer de maximiser les différentes valeurs.
+
+La matrice de contrainte A et le vecteur B deviennent : 
+
+$ A = \begin{pmatrix}
+1 &2 &1 &5 &0 &2\\
+2 &2 &1 &2 &2 &1\\
+1 &0 &3 &2 &2 &0\\
+8 &15 &0 &5 &0 &10\\
+7 &1 &2 &15 &7 &12\\
+8 &1 &11 &0 &10 &25\\
+2 &10 &5 &4 &13 &7\\
+5 &0 &0 &7 &10 &25\\
+5 &3 &5 &8 &0 &7\\
+5 &5 &3 &12 &8 &0\\
+-1 &-1 &-1 &-1 &-1 &-1\\      %resp Atelier
+-5 &-5 &-6 &-10 &-5 &-4\\     %resp Stock
+-1 &-1 &-1 &1 &1 &1\\         %resp Comm
+-13 &-1 &-11 &-7 &-20 &-50\\  %resp Perso
+ \end{pmatrix}  B = \begin{pmatrix}
+350\\
+620\\
+485\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+-378.8\\
+-1385\\
+-0\\
+-2887.9 \\
+ \end{pmatrix} $
+ 
+Nous allons donc jouer sur les valeurs de B pour essayer de maximiser les chiffres.
+Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents objectifs.
+
+
+ 
+Bien entendu, comme nous sommes en face d’une entreprise, le bénéfice et le profit sont parmis les variables à plus prendre en compte.  
+Nous avons opté alors pour les valeurs suivantes. 
+$ B = \begin{pmatrix}
+350\\
+620\\
+485\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+4800\\
+-339\\
+-1425\\
+40\\
+-3075 \\
+ \end{pmatrix} $
+ 
+Nous optenons alors un nombre de produits fabriqué de l'ordre de : \\
+0 produits A fabriqués \\
+102.9687 produits B fabriqués \\
+57.1875 produits C fabriqués \\
+0 produits D fabriqués \\
+156.7187 produits E fabriqués \\
+43.4375 produits F fabriqués \\
+ 
+ Ceci nous donne ainsi :\\
+8081 de bénéfice\\
+360 de produits fabriqués\\
+1815 de produits dans le stock\\
+40 de difference entre les produits de la famille A et B\\ 
+6038 de temps d'utilisation des machines 3 et 5\\
+
+Ceci permet de satisfaire : \\
+77\% des objectifs du Comptable\\
+95\% des objectifs du responsable Atelier\\
+77\% des objectifs du responsable Stock\\
+80\% des objectifs du reponsable commercial\\
+et finalement 48\% des objectifs du responsable personnel\\
+(Cf Figure 2)
+
+\begin{figure}[position]
+    \begin{center}
+        \includegraphics[scale=0.55]{../Partie2/Partie2.png}
+        \caption{
+            \label{fig} Niveau de satisfaction en fonction des objectifs de chaque responsable
+        }
+    \end{center}
+\end{figure}
+
+
+Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ 80\% des objectifs des autres responsables. 
+
+
+ 
+
+
 
 \section{Partie3}
 test

@@ -13,6 +13,7 @@
 \usepackage{microtype}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{float}
 \DeclareUnicodeCharacter{00A0}{ }
 
 \renewcommand*{\familydefault}{\sfdefault}
@@ -221,7 +222,7 @@ De ce fait, afin de contourner le problème, nous ajouterons 2 contraintes suppl
 \textbf{ 378.8*i < a+b+c+d+e+f avec 0.50<i<1}\\
 \\
 En intégrant les nouvelles contraintes au jeu établi précédemment par le biais de \textbf{$A_{new}$} et de \textbf{$b_{new}$} , nous avons pu modéliser l'évolution du stock global $F_{respStock} (X)$ en fonction du pourcentage $\%prodMax$ de la production maximale imposé en seuil minimal d'activité (cf. Figure 1).\\
-\begin{figure}[position]
+\begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.35]{Stock}
         \caption{
@@ -297,15 +298,16 @@ Cependant, le minimum envisageable pour cette fonction est le vecteur nul, solut
 - La deuxième contrainte concerne un seuil minimal (pourcentage de la production maximale, à définir) d'activité :
 \textbf{ 378.8*i < a+b+c+d+e+f avec 0<i<1}\\
 A partir du jeu de contraintes modifié interprété par \textbf{$A_{new}$} et de \textbf{$b_{new}$}, nous pouvons établir une relation traduisant l'impact du seuil minimal sur les temps d'usinage des machines 3 et 5 ainsi que sur le temps d'utilisation global (cf. Figure 2)\\
-%\begin{figure}[position]
- %   \begin{center}
-  %      \includegraphics[scale=0.35]{Stock}
-   %     \caption{
-    %        \label{fig} Évolution du stock en fonction de \%prodMax
-    %    }
-    %\end{center}
-%\end{figure}
-A partir de l'analyse des graphiques produits, nous déduisons que la solution optimale pour cette problématique s'établit à \textbf{82\%} de la production maximale, assurant un compromis idéal entre l'utilisation maximale des deux machines et l'utilisation indépendante de chacune d'entre elles.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.38]{Pers}
+        \caption{
+            \label{fig} Évolution des differents temps machine en fonction \%prodMax
+        }
+    \end{center}
+\end{figure}
+A partir de l'analyse des graphiques produits, nous constatons une zone de solutions possibles intéréssantes (délimitées par les frontières rouges et vertes). Dans cette zone, le temps d'utilisation de la machine 5 est quasi-constant. L'augmentation est ainsi liée par le temps d'utilisation de la machine 3.\\
+L'objectif étant de minimiser le temps d'utilisation des deux machines et respecter un certain équilibre entre ces dernières (ne pas préserver une machine au détriment d'une autre), nous déduisons que la solution optimale pour cette problématique s'établit à \textbf{82\%} de la production maximale, assurant un compromis idéal entre l'utilisation maximale des deux machines et l'utilisation indépendante de chacune d'entre elles.
 Cette condition supplémentaire nous permettra de construire notre solution au problème suivant :
 $f(X) = F_{respPers} (X) =(13~1~11~7~20~50)\cdot X$ \\
 $$
@@ -330,12 +332,26 @@ Le temps minimal de la machine 5 obtenu est de : \textbf{1350 mn}
 
 \section{Programmation Linéaire Multicritère}
 \subsection{Introduction}
-Nous considérons à present le point de vue du directeur d’entreprise. Son objectif est de contenter tous les responsables en satisfaisant au mieux possible les critères de chacun.
+Nous considérons à présent le point de vue du directeur d’entreprise. Son objectif est de contenter tous les responsables en satisfaisant au mieux possible les critères de chacun.
 
 \subsection{Matrice de Gain}
-Nous commençons par representer la matrice de Gain.\\
+Nous commençons par représenter la matrice de Gain.\\
 La matrice de Gain correspond aux valeurs obtenues pour les objectifs de chaque responsable en fonction du cas idéal d’un responsable. Elle est générée à partir des résultats de la partie 1, c’est à dire aux choix d’une programmation mono-critère.
-En récupérant les fonctions objectifs de chaque responsable et en récupérant les solutions optimales de chaque responsable, nous pouvons donc calculer la matrice de gain.
+En récupérant les fonctions objectifs de chaque responsable et les solutions optimales de chaque responsable, nous pouvons donc calculer la matrice de gain.\\
+$F_{compta} =  \begin{pmatrix}-5.67  &-11.88  &-12.27  &-1.03  &-31.65  &-27.55 \end{pmatrix} $ \\
+$F_{respAtelier} =  \begin{pmatrix}-1 & -1 & -1 & -1 & -1 & -1 \end{pmatrix} $ \\
+$F_{respStock} =  \begin{pmatrix}-5 & -5 & -6 & -10 & -5 & -4 \end{pmatrix} $ \\
+$F_{respCom} = \begin{pmatrix}-1 &-1 &-1 &1 &1 &1 \end{pmatrix} $ \\
+$F_{respPers} = \begin{pmatrix}-13 &-1 &-11 &-7 &-20 &-50 \end{pmatrix} $ \\\\
+$sol_{compta}  =  \begin{pmatrix}0 &20.41 &0 &0 &242.5 &94.18 \end{pmatrix} $ \\
+$sol_{respAtelier} =  \begin{pmatrix}0 &56.73 &38.69 &0 &184.46 &98.92 \end{pmatrix} $ \\
+$sol_{respStock} =  \begin{pmatrix}38.3473 &25.4708 &0.0000 &0.0000 &108.8663 &130.3556 \end{pmatrix} $ \\
+$sol_{respCom}  =  \begin{pmatrix}142.12 &0 &44.42 &0 &104.81 &81.73 \end{pmatrix} $ \\
+$sol_{respPers} = \begin{pmatrix}0 &174.38 &1.23 &0 &135 &0 \end{pmatrix} $ \\\\
+$Ft = \begin{pmatrix} F_{compta}^t &F_{respAtelier}^t &F_{respStock}^t &F_{respCom}^t &F_{respPers}^t \end{pmatrix} $\\
+$Solt = \begin{pmatrix} sol_{compta}^t &sol_{respAtelier}^t &sol_{respStock}^t &sol_{respCom}^t &sol_{respPers}^t \end{pmatrix} $ \\\\
+On obtient la matrice de Gain en effectuant le calcul suivant : \\
+$Gain = -Solt^t \cdot Ft $ \\
 
 $ Gain=\begin{pmatrix}
 10512 &357 &1691 &-316 &9579\\
@@ -346,12 +362,13 @@ $ Gain=\begin{pmatrix}
 \end{pmatrix} $\\
 
 
-La première colonne correspond au benefice obtenu en tenant compte de la solution optimale de chaque responsable.
+La première colonne correspond au bénéfice obtenu en tenant compte de la solution optimale de chaque responsable.
 La deuxième correspond quand à elle au nombre de produit à fabriquer.
 La troisième quand à elle correspond au nombre de produit dans le stock tandis que la quatrième correspond à la difference de quantité de produit fabriqué entre les deux familles.
-Finalement, la 5ème correspond aux temps d’utilisation des machines 3 et 5.
+Finalement, la 5ème correspond aux temps d’utilisation des machines 3 et 5.\\
+Les lignes de la matrice correspondent aux résultats obtenus pour un responsable particulier
 
-La diagonal correspond au point de Mire, c’est à dire, le résultat optimal que voudrais atteindre le responsable de l’entreprise. Nous devons donc essayer de nous y approcher le plus possible.
+La diagonale correspond au point de Mire, c’est à dire, le résultat optimal que voudrait atteindre le responsable de l’entreprise. Nous devons donc essayer de nous y approcher le plus possible.
 
 $ PM = \begin{pmatrix}
 10512\\
@@ -363,7 +380,6 @@ $ PM = \begin{pmatrix}
 
 \subsection{Application de la Programation Lineaire Multicritere}
 Nous allons à present considerer le bénéfice de l’entreprise comme variable à modifier et placer les autres variable en contrainte. Nous pouvons alors jouer sur les différentes valeurs pour essayer de maximiser les différentes valeurs.
-
 La matrice de contrainte A et le vecteur B deviennent : 
 
 $ A = \begin{pmatrix}
@@ -398,13 +414,12 @@ $ A = \begin{pmatrix}
 -2887.9 \\
  \end{pmatrix} $
  
-Nous allons donc jouer sur les valeurs de B pour essayer de maximiser les chiffres.
-Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents objectifs.
+Nous allons donc modifier les valeurs de B pour essayer de maximiser les chiffres.
+Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs, plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents responsables.
 
+Bien entendu, le bénéfice et le profit sont les variables stratégiques à maximiser.  
+Nous avons opté alors pour les valeurs suivantes pour assurer un niveau optimal de cohérence entre les différents responsables et l'objectif global de l'entreprise. 
 
- 
-Bien entendu, comme nous sommes en face d’une entreprise, le bénéfice et le profit sont parmis les variables à plus prendre en compte.  
-Nous avons opté alors pour les valeurs suivantes. 
 $ B = \begin{pmatrix}
 350\\
 620\\
@@ -422,46 +437,37 @@ $ B = \begin{pmatrix}
 -3075 \\
  \end{pmatrix} $
  
-Nous optenons alors un nombre de produits fabriqué de l'ordre de : \\
-0 produits A fabriqués \\
-102.9687 produits B fabriqués \\
-57.1875 produits C fabriqués \\
-0 produits D fabriqués \\
-156.7187 produits E fabriqués \\
-43.4375 produits F fabriqués \\
- 
- Ceci nous donne ainsi :\\
-8081 de bénéfice\\
-360 de produits fabriqués\\
-1815 de produits dans le stock\\
-40 de difference entre les produits de la famille A et B\\ 
-6038 de temps d'utilisation des machines 3 et 5\\
+Nous obtenons alors un nombre de produits fabriqué de l'ordre de : \\
+\textbf{0} produits A fabriqués \\
+\textbf{102.9687} produits B fabriqués \\
+\textbf{57.1875} produits C fabriqués \\
+\textbf{0} produits D fabriqués \\
+\textbf{156.7187} produits E fabriqués \\
+\textbf{43.4375} produits F fabriqués \\
+
+Cette configuration nous permettra de réaliser:\\
+\textbf{8081€} de bénéfice\\
+\textbf{360} produits fabriqués\\
+\textbf{1815} de produits dans le stock\\
+\textbf{40} de difference entre les produits de la famille A et B\\ 
+\textbf{6038} de temps d'utilisation des machines 3 et 5\\
 
 Ceci permet de satisfaire : \\
-77\% des objectifs du Comptable\\
-95\% des objectifs du responsable Atelier\\
-77\% des objectifs du responsable Stock\\
-80\% des objectifs du reponsable commercial\\
-et finalement 48\% des objectifs du responsable personnel\\
-(Cf Figure 2)
-
-\begin{figure}[position]
+\textbf{77\%} des objectifs du Comptable\\
+\textbf{95\%} des objectifs du responsable Atelier\\
+\textbf{77\%} des objectifs du responsable Stock\\
+\textbf{80\%} des objectifs du reponsable commercial\\
+et finalement \textbf{48\%} des objectifs du responsable personnel\\
+(Cf Figure 3)
+\begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.55]{../Partie2/Partie2.png}
+        \includegraphics[scale=0.38]{../Partie2/Partie2.png}
         \caption{
             \label{fig} Niveau de satisfaction en fonction des objectifs de chaque responsable
         }
     \end{center}
 \end{figure}
-
-
 Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ 80\% des objectifs des autres responsables. 
-
-
- 
-
-
-
 \section{Partie3}
 test
 

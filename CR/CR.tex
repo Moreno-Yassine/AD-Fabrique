@@ -379,6 +379,8 @@ $ PM = \begin{pmatrix}
 \end{pmatrix} $
 
 \subsection{Application de la Programation Lineaire Multicritere}
+\subsubsection{Axe de travail}
+
 Nous allons à present considerer le bénéfice de l’entreprise comme variable à modifier et placer les autres variable en contrainte. Nous pouvons alors jouer sur les différentes valeurs pour essayer de maximiser les différentes valeurs.
 La matrice de contrainte A et le vecteur B deviennent : 
 
@@ -415,8 +417,10 @@ $ A = \begin{pmatrix}
  \end{pmatrix} $
  
 Nous allons donc modifier les valeurs de B pour essayer de maximiser les chiffres.
-Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs, plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents responsables.
+Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs, plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents responsables.\\\\
 
+Afin de construire notre solution finale, nous allons spécifier des contraintes moins strictes que les contraintes initiales. Notre axe de travail sera donc de baisser le nombre de produit (Réduire la valeur 378.8), augmenter le stock (Augmenter la valeur 1385), faire varier l'equilibre entre les deux familles (Réduire ou Augmenter la valeur de 0) et finalement augmenter la duree d'utilisation des machines (Augmenter la valeur de 2887.9) dans la matrice B afin d'obtenir une solution qui nous satisfera. 
+\subsubsection{Resultats}
 Bien entendu, le bénéfice et le profit sont les variables stratégiques à maximiser.  
 Nous avons opté alors pour les valeurs suivantes pour assurer un niveau optimal de cohérence entre les différents responsables et l'objectif global de l'entreprise. 
 
@@ -435,29 +439,28 @@ $ B = \begin{pmatrix}
 -1425\\
 40\\
 -3075 \\
- \end{pmatrix} $
- 
-Nous obtenons alors un nombre de produits fabriqué de l'ordre de : \\
-\textbf{0} produits A fabriqués \\
-\textbf{102.9687} produits B fabriqués \\
-\textbf{57.1875} produits C fabriqués \\
-\textbf{0} produits D fabriqués \\
-\textbf{156.7187} produits E fabriqués \\
-\textbf{43.4375} produits F fabriqués \\
-
+ \end{pmatrix} $ \\
+Nous obtenons alors un nombre de produits fabriqués de l'ordre de : \\
+    \textbf{0}         produits A \\
+    \textbf{102.9687}  produits B \\
+    \textbf{57.1875}   produits C \\
+    \textbf{0}         produits D \\
+    \textbf{156.7187}  produits E \\
+    \textbf{43.4375}   produits F \\
+\\
 Cette configuration nous permettra de réaliser:\\
-\textbf{8081€} de bénéfice\\
-\textbf{360} produits fabriqués\\
-\textbf{1815} de produits dans le stock\\
-\textbf{40} de difference entre les produits de la famille A et B\\ 
-\textbf{6038} de temps d'utilisation des machines 3 et 5\\
-
+    \textbf{8081€}  de bénéfice\\
+    \textbf{360}   produits fabriqués\\
+    \textbf{1815}  de produits dans le stock\\
+    \textbf{40}  de difference entre les produits de la famille A et B\\ 
+    \textbf{6038}  de temps d'utilisation des machines 3 et 5\\
+\\
 Ceci permet de satisfaire : \\
 \textbf{77\%} des objectifs du Comptable\\
 \textbf{95\%} des objectifs du responsable Atelier\\
 \textbf{77\%} des objectifs du responsable Stock\\
 \textbf{80\%} des objectifs du reponsable commercial\\
-et finalement \textbf{48\%} des objectifs du responsable personnel\\
+\textbf{48\%} des objectifs du responsable personnel\\
 (Cf Figure 3)
 \begin{figure}[H]
     \begin{center}
@@ -467,7 +470,10 @@ et finalement \textbf{48\%} des objectifs du responsable personnel\\
         }
     \end{center}
 \end{figure}
+
+
 Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ 80\% des objectifs des autres responsables. 
+
 \section{Partie3}
 test
 

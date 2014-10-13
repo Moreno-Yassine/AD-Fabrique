@@ -14,7 +14,28 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
 \DeclareUnicodeCharacter{00A0}{ }
+\lstset{frame=tb,
+  language=Matlab,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 
 \renewcommand*{\familydefault}{\sfdefault}
 
@@ -48,7 +69,6 @@ On considèrera dans tout ce qui suit : \\
     \end{pmatrix}$ le vecteur définissant la quantité hebdomadaire à fabriquer pour chaque produit (\textbf{variables de décision}).\\
 - $Mchn = \left\{1, 2, 3, 4, 5, 6, 7\right\}$ l'ensemble des machines utilisées dans la fabrication des produits.\\
 - $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.\\
-...
 \subsection*{Jeu de contraintes}
 Nous détaillerons dans cette section les contraintes imposées par les différents constituants de l'entreprise FaBrique. \\
 Tout d'abord, les contraintes de domaine stipulent que toutes les quantités hebdomadaires à fabriquer par l'entreprise doivent être positifs ou nuls, ce qui peut se traduire par l'inégalité suivante :
@@ -98,8 +118,8 @@ $$
         4800\\
         4800
     \end{pmatrix}
-$$ 
-
+$$ \\
+La matrice de contraintes complète est disponible en \textbf{Annexe}.\\
 \section{Programmation Linéaire Monocritère}
 \subsection{Modélisation et Proposition de solution : Comptable}
 L'objectif du comptable est de maximiser le bénéfice, ce dernier est obtenu par la différence entre le revenu global $G$ et des charges totales $C$  liées à l'achat des matières premières et du cout d'usinage sur les machines de l'entreprise.\\
@@ -340,7 +360,7 @@ La matrice de Gain correspond aux valeurs obtenues pour les objectifs de chaque 
 En récupérant les fonctions objectifs de chaque responsable et les solutions optimales de chaque responsable, nous pouvons donc calculer la matrice de gain.\\
 $F_{compta} =  \begin{pmatrix}-5.67  &-11.88  &-12.27  &-1.03  &-31.65  &-27.55 \end{pmatrix} $ \\
 $F_{respAtelier} =  \begin{pmatrix}-1 & -1 & -1 & -1 & -1 & -1 \end{pmatrix} $ \\
-$F_{respStock} =  \begin{pmatrix}-5 & -5 & -6 & -10 & -5 & -4 \end{pmatrix} $ \\
+$F_{respStock} =  \begin{pmatrix}-5 & -5 & -6 & -10 & -5 & -4 \end{pmatrix} $ \\
 $F_{respCom} = \begin{pmatrix}-1 &-1 &-1 &1 &1 &1 \end{pmatrix} $ \\
 $F_{respPers} = \begin{pmatrix}-13 &-1 &-11 &-7 &-20 &-50 \end{pmatrix} $ \\\\
 $sol_{compta}  =  \begin{pmatrix}0 &20.41 &0 &0 &242.5 &94.18 \end{pmatrix} $ \\
@@ -381,7 +401,7 @@ $ PM = \begin{pmatrix}
 \subsection{Application de la Programation Lineaire Multicritere}
 \subsubsection{Axe de travail}
 
-Nous allons à present considerer le bénéfice de l’entreprise comme variable à modifier et placer les autres variable en contrainte. Nous pouvons alors jouer sur les différentes valeurs pour essayer de maximiser les différentes valeurs.
+Nous allons à présent considérer le bénéfice de l’entreprise comme variable à modifier et placer les autres variable en contrainte. Nous pouvons alors jouer sur les différentes valeurs pour essayer de maximiser les différentes valeurs.
 La matrice de contrainte A et le vecteur B deviennent : 
 
 $ A = \begin{pmatrix}
@@ -414,13 +434,13 @@ $ A = \begin{pmatrix}
 -1385\\
 -0\\
 -2887.9 \\
- \end{pmatrix} $
+ \end{pmatrix} $\\
  
 Nous allons donc modifier les valeurs de B pour essayer de maximiser les chiffres.
-Nous remarquons que les valeurs sont corrélées, plus nous maximisons un des différents objectifs, plus les autres diminuent. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents responsables.\\\\
+Nous remarquons que les valeurs sont corrélées. Il faut alors essayer de trouver un compromis qui satisfera au mieux les différents responsables.\\\\
 
-Afin de construire notre solution finale, nous allons spécifier des contraintes moins strictes que les contraintes initiales. Notre axe de travail sera donc de baisser le nombre de produit (Réduire la valeur 378.8), augmenter le stock (Augmenter la valeur 1385), faire varier l'equilibre entre les deux familles (Réduire ou Augmenter la valeur de 0) et finalement augmenter la duree d'utilisation des machines (Augmenter la valeur de 2887.9) dans la matrice B afin d'obtenir une solution qui nous satisfera. 
-\subsubsection{Resultats}
+Afin de construire notre solution finale, nous allons spécifier des contraintes moins strictes que les contraintes initiales. Notre axe de travail sera donc de baisser le nombre de produit (Réduire la valeur 378.8), augmenter le stock (Augmenter la valeur 1385), faire varier l'équilibre entre les deux familles (Réduire ou Augmenter la valeur de 0) et finalement augmenter la durée d'utilisation des machines (Augmenter la valeur de 2887.9) dans la matrice B afin d'obtenir une solution qui nous satisfera. 
+\subsubsection{Résultats}
 Bien entendu, le bénéfice et le profit sont les variables stratégiques à maximiser.  
 Nous avons opté alors pour les valeurs suivantes pour assurer un niveau optimal de cohérence entre les différents responsables et l'objectif global de l'entreprise. 
 
@@ -464,19 +484,372 @@ Ceci permet de satisfaire : \\
 (Cf Figure 3)
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.38]{../Partie2/Partie2.png}
+        \includegraphics[scale=0.5]{../Partie2/Partie2.png}
         \caption{
             \label{fig} Niveau de satisfaction en fonction des objectifs de chaque responsable
         }
     \end{center}
 \end{figure}
-
-
-Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ 80\% des objectifs des autres responsables. 
+Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ \textbf{80\% de satisfaction} concernant les objectifs des autres responsables. 
 
 \section{Partie3}
-test
+\subsection{Choix de la méthode}
+Nous recherchons la meilleure solution parmi les huit proposées : pour cela, nous avons décidé d’utiliser la méthode Electre I, qui permet de trouver la meilleure solution. En parallèle, la méthode Electre II permet de classer les solutions, d’où le choix de la méthode Electre I.
+\subsection{Mise en œuvre de la méthode}
+\subsubsection{Solutions dominantes}
+D’après la matrice d'appréciation, nous notons que les solutions suivantes dominent les autres solutions : a, b, d, e, h (Cf Figure 4).\\
 
+%\begin{figure}[H]
+ %   \begin{center}
+  %      \includegraphics[scale=0.38]{../Partie2/Partie2.png}
+   %     \caption{
+   %         \label{fig} Niveau de satisfaction en fonction des objectifs de chaque responsable
+   %     }
+   % \end{center}
+%\end{figure}
+L’étude s'effectuera en deux temps : dans un premier temps, nous allons considérer que tous les coefficients de pondération sont égaux à 1, puis, dans un second temps, les critères d’appréciation seront pondérés selon les résultats obtenus dans la partie 2.
+\subsubsection{Analyse sans pondération}
+Nous présenterons dans un premier temps la matrice \textbf{de concordance} :
+\begin{center}
+$ M_{Concordance} =\begin{pmatrix}
+-&3/4&3/4&3/4&3/4\\
+1/4&-&2/4&3/4&2/4\\
+2/4&2/4&-&2/4&3/4\\
+1/4&3/4&2/4&-&2/4\\
+2/4&2/4&3/4&2/4&-\\
+\end{pmatrix} $\\
+\end{center}
+Ensuite, la matrice \textbf{de discordance} que nous utiliserons dans l'analyse :
+\begin{center}
+$ M_{Discordance} =\begin{pmatrix}
+-&4/10&2/10&4/10&2/10\\
+2/10&-&3/10&6/10&1/10\\
+3/10&4/10&-&5/10&2/10\\
+2/10&6/10&3/10&-&4/10\\
+3/10&2/10&2/10&5/10&-\\
+\end{pmatrix} $\\
+\end{center}
+
+\emph{Premier seuillage :}\\
+Dans un premier temps, on choisit les valeurs suivantes : 
+\begin{center}
+\textbf{$s = 0,75 = 3/4$\\
+$v= 0,2 = 2/10$}
+\end{center}
+En comparant les matrices de concordance et de discordance aux seuils s et v, on obtient le résultat ci-dessous :\\
+%Graphe à inserer
+L’ensemble {a,b,e} constitue le noyau. Cependant, nous souhaitons obtenir une meilleure solution : le résultat obtenu n’est donc \textbf{pas satisfaisant}.\\\\
+
+\emph{Deuxième seuillage :}\\
+Afin d’affiner le résultat et de n’obtenir qu’une seule meilleure solution, on modifie les valeurs du seuil de discordance :\\
+\begin{center}
+\textbf{$s = 0,75 = 3/4$\\
+$v= 0,4 = 4/10$}
+\end{center}
+En procédant de la même façon que pour le premier seuillage, on obtient le résultat suivant :\\
+% Graphe 3
+L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.
+\newpage
 \section*{Annexe}
-test
+\begin{lstlisting}
+% Matrice de contraintes
+A=[
+    1 2 1 5 0 2;
+    2 2 1 2 2 1;
+    1 0 3 2 2 0;
+    8 15 0 5 0 10;
+    7 1 2 15 7 12;
+    8 1 11 0 10 25;
+    2 10 5 4 13 7;
+    5 0 0 7 10 25;
+    5 3 5 8 0 7;
+    5 5 3 12 8 0
+];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800];  
+
+%-------------------------------------------------------------------------------------------
+function [ x ] = comptable( A, B )
+%Cette fonction permet de calculer le benefice maximal pour le comptable
+%et de calculer le nombre de chaque produits correspondant.
+
+%Equation 
+%5.67A + 11.88B + 12.27C + 1.03D + 31.65E + 27.55F
+
+f = [-5.67; -11.88; -12.27; -1.03; -31.65; -27.55];
+lb = [0;0;0;0;0;0];
+x = linprog(f, A, B,[],[],lb); 
+
+result = -f' * x
+end
+
+%-------------------------------------------------------------------------------------------
+function [x] = respAtelier( A,B )
+%Cette fonction permet de calculer le nombre de produit maximal a fabriquer
+
+%Equation
+%f(a,b,c,d,e,f) = a+b+c+d+e+f (maximiser)
+
+f = [-1; -1; -1; -1; -1; -1];
+lb = [0;0;0;0;0;0];
+x = linprog(f, A, B,[],[],lb,[]); 
+
+Result = -f'*x
+end
+
+%-------------------------------------------------------------------------------------------
+function [ x ] = stock( )
+% cette fonction permet de minimiser le stock global en integrant des
+% contraintes supplementaires de production
+
+A=[
+    1 2 1 5 0 2;
+    2 2 1 2 2 1;
+    1 0 3 2 2 0;
+    8 15 0 5 0 10;
+    7 1 2 15 7 12;
+    8 1 11 0 10 25;
+    2 10 5 4 13 7;
+    5 0 0 7 10 27;
+    5 3 5 8 0 7;
+    5 5 3 12 8 0;
+    1 1 1 1 1 1;
+    -1 -1 -1 -1 -1 -1; %(-) Car superieur ou egal 
+];
+
+R = zeros(100); %Resultat du stock
+for i=1:100  
+    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(i/100)*378.8];
+    f = [5; 5; 6; 10; 5; 4];
+    lb = [0;0;0;0;0;0];
+    x = linprog(f, A, B,[],[],lb,[]);
+    R(i) = f'*x;    
+end
+
+hold on
+plot(R)
+hold off;
+
+    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(80/100)*378.8];
+    f = [5; 5; 6; 10; 5; 4];
+    lb = [0;0;0;0;0;0];
+    x = linprog(f, A, B,[],[],lb,[]);
+    f'*x
+end
+
+%-------------------------------------------------------------------------------------------
+function [ x ] = COM( A, B, Aeq, Beq)
+%Cette fonction permet de calculer et minimiser l'ecart de production
+%entre les deux categorie de produit. Elle calcule le nombre de chaque 
+%produits a fabriquer correspondant.
+
+f=[-1 ; -1; -1; -1; -1; -1 ];
+lb = [0; 0; 0; 0; 0; 0];
+x=linprog(f, A, B, Aeq, Beq, lb, []);
+
+end
+
+%-------------------------------------------------------------------------------------------
+function [ X ] = Pers()
+%Cette fonction permet de calculer et minimiser le temps d'utilisation des
+%machines 3 et 5, en integrant des contraintes supplementaires
+
+A=[
+    1 2 1 5 0 2;
+    2 2 1 2 2 1;
+    1 0 3 2 2 0;
+    8 15 0 5 0 10;
+    7 1 2 15 7 12;
+    8 1 11 0 10 25;
+    2 10 5 4 13 7;
+    5 0 0 7 10 25;
+    5 3 5 8 0 7;
+    5 5 3 12 8 0;
+    1 1 1 1 1 1;
+    -1 -1 -1 -1 -1 -1; %(-) Car superieur ou egal 
+];
+
+R = zeros(100); %Temps machine total
+R3 = zeros(100);%Temps machine 3
+R5 = zeros(100);%Temps machine 5
+for i=1:100
+    
+    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(i/100)*378.8];
+    lb = [0;0;0;0;0;0;];
+
+    f=[13;1;11;7;20;50];%fonction Temps machine total
+    x = linprog(f, A, B,[],[],lb,[]);
+    R(i) = f'*x;
+    
+    f=[8;1;11;0;10;25];%fonctionTemps machine 3
+    R3(i) = f'*x;
+    
+    f=[5;0;0;7;10;25];%fonction Temps machine 5
+    R5(i) = f'*x;
+    
+end
+
+subplot(3,1,1), plot(R)
+subplot(3,1,2), plot(R3)
+subplot(3,1,3), plot(R5)
+
+
+%solution optimale a 82%
+    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(82/100)*378.8];
+    lb = [0;0;0;0;0;0;];
+
+    f=[13;1;11;7;20;50];
+    x = linprog(f, A, B,[],[],lb,[]);
+    f'*x
+    
+    f=[8;1;11;0;10;25];
+    f'*x
+    
+    f=[5;0;0;7;10;25];
+    f'*x
+    
+    x
+end
+%-------------------------------------------------------------------------------------------
+%--------------------------------------Partie2---------------------------------------------
+
+function [ Satisfaction ] = Satisfaction( Gain, Solt )
+%Calcul de la matrice de satisfaction
+%Elle nous donne la satisfaction de la solution par rapport au point de
+%mire
+%(Satisfaction entre 0 et 1)
+
+Satisfaction = zeros(5,5);
+Satisfaction(:,1) = Gain(:,1)./Gain(1,1);
+%On veut un benefice maximal donc on divise le benefice par rapport a l'objectif ideal.
+
+Satisfaction(:,2) = Gain(:,2)./Gain(2,2); 
+%On veut un nombre de produit maximal donc on divise donc le nombre de produits par rapport a l'objectif ideal.
+
+Satisfaction(:,3) = Gain(3,3)./Gain(:,3);
+%On veut un stock minimal donc on divise donc l'objectif ideal par rapport au stock.
+
+%Pour l'equilibre, nous regardons le rapport entre les deux familles pour
+%obtenir la satisfaction. La satisfaction maximale est obtenue quand on
+%peut a l'equilibre parfait.
+for i=1:5;
+    sol1 = (Solt(1,i) + Solt(2,i) + Solt(3,i)) / (Solt(4,i) + Solt(5,i) + Solt(6,i));
+    sol2 = (Solt(4,i) + Solt(5,i) + Solt(6,i)) / (Solt(1,i) + Solt(2,i) + Solt(3,i));
+    if sol1<1
+        Satisfaction(i,4) = sol1;
+    else
+        Satisfaction(i,4) = sol2;
+    end
+end
+
+Satisfaction(:,5) = Gain(5,5)./Gain(:,5);
+%On veut un temps d'utilisation des machines minimal donc on divise donc l'objectif ideal par rapport au temps d'utilisation des machines.
+
+end
+
+%-------------------------------------------------------------------------------------------
+function [ Satisfaction ] = VecteurSatisfaction( pointActuel, PM, sol )
+%Calcul du vecteur de satisfaction
+%Elle nous donne la satisfaction de la solution par rapport au point de
+%mire
+
+Satisfaction = zeros(5,1);
+Satisfaction(1) = pointActuel(1)./PM(1);
+%On veut un benefice maximal donc on divise le benefice par rapport a l'objectif ideal.
+
+
+Satisfaction(2) = pointActuel(2)./PM(2);
+%On veut un nombre de produit maximal donc on divise donc le nombre de produits par rapport a l'objectif ideal.
+
+
+Satisfaction(3) = PM(3)./pointActuel(3);
+%On veut un stock minimal donc on divise donc l'objectif ideal par rapport au stock.
+
+
+%Pour l'equilibre, nous regardons le rapport entre les deux familles pour
+%obtenir la satisfaction. La satisfaction maximale est obtenue quand on
+%peut a l'equilibre parfait.
+    sol1 = (sol(1) + sol(2) + sol(3)) / (sol(4) + sol(5) + sol(6)) ;
+    sol2 = (sol(4) + sol(5) + sol(6)) / (sol(1) + sol(2) + sol(3)) ;
+    if sol1<1
+        Satisfaction(4) = sol1;
+    else
+        Satisfaction(4) = sol2;
+    end
+    
+    
+Satisfaction(5) = PM(5)./pointActuel(5);
+%On veut un temps d'utilisation des machines minimal donc on divise donc l'objectif ideal par rapport au temps d'utilisation des machines.
+
+end
+
+%-------------------------------------------------------------------------------------------
+function [] = Partie2()
+%---Solutions Partie 1 ---%
+F_compta = [-5.67; -11.88; -12.27; -1.03; -31.65; -27.55];
+F_respAtelier = [-1; -1; -1; -1; -1; -1];
+F_respStock = [-5; -5; -6; -10; -5; -4];
+F_respCom=[-1;-1;-1;1;1;1];
+F_respPers=[-13;-1;-11;-7;-20;-50];
+
+sol_compta = [0;20.41;0;0;242.5;94.18];
+sol_respAtelier = [0;56.73;38.69;0;184.46;98.92];
+sol_respStock = [38.3473;25.4708;0.0000;0.0000;108.8663;130.3556];
+sol_respCom = [142.12;0;44.42;0;104.81;81.73];
+sol_respPers =[0;174.38;1.23;0;135;0];
+%---Fin Solutions Partie 1 ---%
+
+
+%---Calcul Matrice Gain---%
+Ft = [F_compta,F_respAtelier,F_respStock,F_respCom,F_respPers];
+Solt = [sol_compta,sol_respAtelier,sol_respStock,sol_respCom,sol_respPers];
+
+PM = [10512; 378.8; 1385; 0; 2887.9];  %Point de Mire
+
+Gain = -transpose(Solt)*Ft
+%---Fin Calcul Matrice Gain---%
+
+Satisfaction(Gain, Solt) %Matrice de Satisfaction
+
+%---Ajustement de la solution ---%
+%On place Tous les responsables sauf le compta en contrainte, 
+%on ajuste puis on recalcule
+A=[
+    1 2 1 5 0 2;
+    2 2 1 2 2 1;
+    1 0 3 2 2 0;
+    8 15 0 5 0 10;
+    7 1 2 15 7 12;
+    8 1 11 0 10 25;
+    2 10 5 4 13 7;
+    5 0 0 7 10 25;
+    5 3 5 8 0 7;
+    5 5 3 12 8 0;
+    -1 -1 -1 -1 -1 -1; %Resp Atelier
+    -5 -5 -6 -10 -5 -4; %resp Stock
+    -1 -1 -1 1 1 1; %resp Comm
+    -13 -1 -11 -7 -20 -50; %resp Perso
+];
+
+
+%Reduire produits 378.8
+%Augmenter Stock 1385
+%Reduire ou augmenter Comm
+%Augmenter Personnel 2887.9
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -358.8; -1385; -0; -2887.9];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -320; -1425; 25; -3075];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -340; -1450; -25; -2990];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -290; -1490; -25; -3090];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -339; -1425; 70; -2575];
+B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; -339; -1425; 40; -3075]; %Solution Retenue
+
+
+sol_comptable = comptable(A,B);
+
+PM = [10512; 378.8; 1385; 0; 2887.9]; %Point de Mire  
+pointActuel = [-F_compta' * sol_comptable; -F_respAtelier' * sol_comptable; -F_respStock' * sol_comptable; -F_respCom' * sol_comptable; -F_respPers' * sol_comptable]
+
+VecteurSatisfaction(pointActuel, PM, sol_comptable)
+
+end
+\end{lstlisting}
 \end{document}

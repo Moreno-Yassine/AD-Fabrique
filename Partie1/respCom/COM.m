@@ -1,25 +1,11 @@
-function [ X ] = COM( A, B, Aeq, Beq)
-%fonction pour minimiser l'ecart de prod entre les deux categorie de
-%produit
+function [ x ] = COM( A, B, Aeq, Beq)
+%Cette fonction permet de calculer et minimiser l'ecart de production
+%entre les deux categorie de produit. Elle calcule le nombre de chaque 
+%produits à fabriquer correspondant.
 
-F=[-1 ;
-    -1;
-    -1; 
-    -1; 
-    -1;
-    -1;
-    ];
-
-lb = [0;
-    0; 
-    0; 
-    0;
-    0;
-    0;
-    ];
-
-
-X=linprog(F, A, B, Aeq, Beq, lb, []);
+f=[-1 ; -1; -1; -1; -1; -1 ];
+lb = [0; 0; 0; 0; 0; 0];
+x=linprog(f, A, B, Aeq, Beq, lb, []);
 
 end
 

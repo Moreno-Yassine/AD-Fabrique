@@ -1,8 +1,8 @@
 function [x] = respAtelier( A,B )
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+%Cette fonction permet de calculer le nombre de produit maximal à fabriquer
+%et de calculer le nombre de chaque produits à fabriquer correspondant.
 
-%équation
+%Equation
 %f(a,b,c,d,e,f) = a+b+c+d+e+f (maximiser)
 
 f = [-1; -1; -1; -1; -1; -1];

@@ -1,5 +1,6 @@
 function [ x ] = stock( )
-% Minimiser f = 5*a + 5*b +6*c + 10*d + 5*e +4*f AVEC CONTRAINTES SUP
+% cette fonction permet de minimiser le stock global en intégrant des
+% contraintes supplémentaires de production
 
 A=[
     1 2 1 5 0 2;
@@ -16,27 +17,20 @@ A=[
     -1 -1 -1 -1 -1 -1; %(-) Car superieur ou egal 
 ];
 
-R = zeros(100);
-Q = zeros(100);
-
-for i=1:100
-    
+R = zeros(100); %Résultat du stock
+for i=1:100  
     B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(i/100)*378.8];
-
     f = [5; 5; 6; 10; 5; 4];
-    g =  [5.67; 12.38; 12.27; 1.03; 31.65; 27.55];
     lb = [0;0;0;0;0;0];
     x = linprog(f, A, B,[],[],lb,[]);
-    y = linprog(g, A, B,[],[],lb,[]);
-    R(i) = f'*x;
-    Q(i) = g'*x;
-    
+    R(i) = f'*x;    
 end
-hold on
-plot(Q)
-hold off;
-    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(80/100)*378.8];
 
+hold on
+plot(R)
+hold off;
+
+    B = [350; 620; 485; 4800; 4800; 4800; 4800; 4800; 4800; 4800; 378.8; -(80/100)*378.8];
     f = [5; 5; 6; 10; 5; 4];
     lb = [0;0;0;0;0;0];
     x = linprog(f, A, B,[],[],lb,[]);

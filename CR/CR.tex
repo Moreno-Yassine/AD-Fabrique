@@ -40,7 +40,7 @@
 \renewcommand*{\familydefault}{\sfdefault}
 
 
-\title{Rapport D'Analyse}
+\title{Rapport D'Analyse : Aide à la Décision}
 
 
 \author{Yassine Moreno \cr Mehdi Kitane \cr Amine ElRhazi \cr Abdelalim Tribak \cr Meryem Benchakroune \cr Karim Benhmida}
@@ -119,7 +119,7 @@ $$
         4800
     \end{pmatrix}
 $$ \\
-La matrice de contraintes complète est disponible en \textbf{Annexe}.\\
+La matrice de contraintes complète\footnote{Matrice A} est disponible en \textbf{Annexe}.
 \section{Programmation Linéaire Monocritère}
 \subsection{Modélisation et Proposition de solution : Comptable}
 L'objectif du comptable est de maximiser le bénéfice, ce dernier est obtenu par la différence entre le revenu global $G$ et des charges totales $C$  liées à l'achat des matières premières et du cout d'usinage sur les machines de l'entreprise.\\
@@ -349,7 +349,7 @@ $ X =\begin{pmatrix}
 Le temps total minimal obtenu est de : \textbf{2887.9 mn}\\
 Le temps minimal de la machine 3 obtenu est de : \textbf{1537.9 mn}\\
 Le temps minimal de la machine 5 obtenu est de : \textbf{1350 mn}
-
+\newpage
 \section{Programmation Linéaire Multicritère}
 \subsection{Introduction}
 Nous considérons à présent le point de vue du directeur d’entreprise. Son objectif est de contenter tous les responsables en satisfaisant au mieux possible les critères de chacun.
@@ -491,10 +491,10 @@ Ceci permet de satisfaire : \\
     \end{center}
 \end{figure}
 Nous trouvons cette solution satisfaisante car nous rognons seulement sur les objectifs du responsable personnel pour obtenir environ \textbf{80\% de satisfaction} concernant les objectifs des autres responsables. 
-
-\section{Partie3}
+\newpage
+\section{Analyse Multicritère}
 \subsection{Choix de la méthode}
-Nous recherchons la meilleure solution parmi les huit proposées : pour cela, nous avons décidé d’utiliser la méthode Electre I, qui permet de trouver la meilleure solution. En parallèle, la méthode Electre II permet de classer les solutions, d’où le choix de la méthode Electre I.
+Nous recherchons la meilleure solution parmi les huit proposées\footnote{a,b,c,d,e,f,g,h ne font plus référence aux quantités de produits, ils feront désormais référence aux propositions de gestion} : pour cela, nous avons décidé d’utiliser la méthode Electre I, qui permet de trouver la meilleure solution. En parallèle, la méthode Electre II permet de classer les solutions, d’où le choix de la méthode Electre I.
 \subsection{Mise en œuvre de la méthode}
 \subsubsection{Solutions dominantes}
 D’après la matrice d'appréciation, nous notons que les solutions suivantes dominent les autres solutions : a, b, d, e, h (Cf Figure 4).\\
@@ -548,7 +548,74 @@ $v= 0,4 = 4/10$}
 \end{center}
 En procédant de la même façon que pour le premier seuillage, on obtient le résultat suivant :\\
 % Graphe 3
-L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.
+L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.\\
+\subsubsection{Analyse avec pondération}
+Dans cette section, nous évaluerons l'impact de la solution optimale obtenue grâce à l'analyse multicritère sur l'appréciation des solutions proposées.\\
+Ainsi, en se référant aux résultats de la deuxième partie, nous imposerons \textbf{un poids fort (4)} aux 3 critères suivants : \textbf{g1, g2 et g3} et \textbf{un poids faible (1)} au critère restant : \textbf{g4}. Nous changerons l'échelle de ce dernier critère à [3-7] afin de l'adapter au poids faible sus-mentionné.\\
+La nouvelle matrice des jugements est la suivante :\\
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|c|r|r|}
+  \hline
+  Solutions & g1(4) & g2(4) & g3(4) & g4(1)\\
+  \hline
+  a &6 & 5 & 5 & 5 \\
+  b &5 & 4 & 9 & 4.2 \\
+  c &3 & 4 & 7 & 4.2 \\
+  d &3 & 7 & 5 & 4.6 \\
+  e &5 & 4 & 3 & 6.6\\
+  f &2 & 5 & 7 & 4.2 \\
+  g &5 & 4 & 2 & 6.6\\
+  h &3 & 5 & 7 & 4.6\\
+  \hline
+\end{tabular}
+\end{table}
+De ce fait, les matrices \textbf{de concordance} et \textbf{de discordance} associées\footnote{a,b,d,e,h sont maintenues en position dominante} sont :
+\begin{center}
+$ M_{Concordance} =\begin{pmatrix}
+-&9/13&9/13&12/13&9/13\\
+4/13&-&8/13&12/13&8/13\\
+8/13&5/13&-&8/13&9/13\\
+1/13&9/13&5/13&-&5/13\\
+8/13&5/13&9/13&8/13&-\\
+\end{pmatrix} $\\
+$ M_{Discordance} =\begin{pmatrix}
+-&4/10&2/10&1.6/10&2/10\\
+1/10&-&3/10&2.4/10&1/10\\
+3/10&4/10&-&2/10&2/10\\
+2/10&6/10&3/10&-&4/10\\
+3/10&2/10&2/10&2/10&-\\
+\end{pmatrix} $\\
+\end{center}
+\emph{Premier seuillage :}\\
+Dans un premier temps, on choisit les valeurs suivantes : 
+\begin{center}
+\textbf{$s = 0,9 = 11.7/13$\\
+$v= 0,1 = 1/10$}
+\end{center}
+En comparant les matrices de concordance et de discordance aux seuils s et v, on obtient le résultat ci-dessous :\\
+%Graphe à inserer
+L’ensemble {a,b,d,e,h} constitue le noyau. Ce seuillage est trop grossier et \textbf{non satisfaisant}.\\\\
+
+\emph{Deuxième seuillage :}\\
+Nous modifions les valeurs du seuil de discordance et revoyons les valeurs du seuil de concordance à la baisse :\\
+\begin{center}
+\textbf{$s = 0,69 = 8.9/13$\\
+$v= 0,2 = 2/10$}
+\end{center}
+En procédant de la même façon que pour le premier seuillage, on obtient le résultat suivant :\\
+% Graphe 3
+L’ensemble {a,b} constitue le noyau, nous procèderons à un dernier seuillage pour dégager la meilleure solution.\\\\
+
+\emph{Troisième seuillage :}\\
+Nous modifions les valeurs du seuil de discordance :\\
+\begin{center}
+\textbf{$s = 0,69 = 8.9/13$\\
+$v= 0,4 = 4/10$}
+\end{center}
+En procédant de la même façon que pour le deuxième seuillage, on obtient le résultat suivant :\\
+% Graphe 3
+L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.\\
 \newpage
 \section*{Annexe}
 \begin{lstlisting}

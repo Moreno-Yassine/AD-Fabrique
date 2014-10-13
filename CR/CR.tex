@@ -56,6 +56,7 @@
 
 \section{Introduction}
 \subsection{Mise en situation}
+L'objectif de ce document est de présenter la démarche ainsi que le modèle mathématique choisi pour établir le meilleur plan de production pour l'entreprise $FaBrique$. Cette solution prendra en compte toutes les contraintes spécifiées par les différents acteurs au sein de l'entreprise. 
 \subsection{Concepts généraux et Contraintes}
 \subsection*{Concepts généraux}
 On considèrera dans tout ce qui suit : \\
@@ -68,7 +69,7 @@ On considèrera dans tout ce qui suit : \\
         f\\
     \end{pmatrix}$ le vecteur définissant la quantité hebdomadaire à fabriquer pour chaque produit (\textbf{variables de décision}).\\
 - $Mchn = \left\{1, 2, 3, 4, 5, 6, 7\right\}$ l'ensemble des machines utilisées dans la fabrication des produits.\\
-- $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.\\
+- $Mtr = \left\{MP1,MP2,MP3\right\}$ l'ensemble des matières premières utilisées lors de la confection des produits.
 \subsection*{Jeu de contraintes}
 Nous détaillerons dans cette section les contraintes imposées par les différents constituants de l'entreprise FaBrique. \\
 Tout d'abord, les contraintes de domaine stipulent que toutes les quantités hebdomadaires à fabriquer par l'entreprise doivent être positifs ou nuls, ce qui peut se traduire par l'inégalité suivante :
@@ -499,14 +500,14 @@ Nous recherchons la meilleure solution parmi les huit proposées\footnote{a,b,c,
 \subsubsection{Solutions dominantes}
 D’après la matrice d'appréciation, nous notons que les solutions suivantes dominent les autres solutions : a, b, d, e, h (Cf Figure 4).\\
 
-%\begin{figure}[H]
- %   \begin{center}
-  %      \includegraphics[scale=0.38]{../Partie2/Partie2.png}
-   %     \caption{
-   %         \label{fig} Niveau de satisfaction en fonction des objectifs de chaque responsable
-   %     }
-   % \end{center}
-%\end{figure}
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.30]{../CR/src/Mimi/3eme.png}
+        \caption{
+           \label{fig} Rapports de domination directs
+        }
+    \end{center}
+\end{figure}
 L’étude s'effectuera en deux temps : dans un premier temps, nous allons considérer que tous les coefficients de pondération sont égaux à 1, puis, dans un second temps, les critères d’appréciation seront pondérés selon les résultats obtenus dans la partie 2.
 \subsubsection{Analyse sans pondération}
 Nous présenterons dans un premier temps la matrice \textbf{de concordance} :
@@ -537,8 +538,15 @@ Dans un premier temps, on choisit les valeurs suivantes :
 $v= 0,2 = 2/10$}
 \end{center}
 En comparant les matrices de concordance et de discordance aux seuils s et v, on obtient le résultat ci-dessous :\\
-%Graphe à inserer
-L’ensemble {a,b,e} constitue le noyau. Cependant, nous souhaitons obtenir une meilleure solution : le résultat obtenu n’est donc \textbf{pas satisfaisant}.\\\\
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.30]{../CR/src/Mimi/2eme.png}
+        \caption{
+           \label{fig} Resultats 1er Seuillage
+        }
+    \end{center}
+\end{figure}
+L’ensemble [a,b,e] constitue le noyau. Cependant, nous souhaitons obtenir une meilleure solution : le résultat obtenu n’est donc \textbf{pas satisfaisant}.\\\\
 
 \emph{Deuxième seuillage :}\\
 Afin d’affiner le résultat et de n’obtenir qu’une seule meilleure solution, on modifie les valeurs du seuil de discordance :\\
@@ -547,8 +555,15 @@ Afin d’affiner le résultat et de n’obtenir qu’une seule meilleure solutio
 $v= 0,4 = 4/10$}
 \end{center}
 En procédant de la même façon que pour le premier seuillage, on obtient le résultat suivant :\\
-% Graphe 3
-L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.\\
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.30]{../CR/src/Mimi/1er.png}
+        \caption{
+           \label{fig} Resultats 2eme Seuillage
+        }
+    \end{center}
+\end{figure}
+L’ensemble [a] constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.\\
 \subsubsection{Analyse avec pondération}
 Dans cette section, nous évaluerons l'impact de la solution optimale obtenue grâce à l'analyse multicritère sur l'appréciation des solutions proposées.\\
 Ainsi, en se référant aux résultats de la deuxième partie, nous imposerons \textbf{un poids fort (4)} aux 3 critères suivants : \textbf{g1, g2 et g3} et \textbf{un poids faible (1)} au critère restant : \textbf{g4}. Nous changerons l'échelle de ce dernier critère à [3-7] afin de l'adapter au poids faible sus-mentionné.\\
@@ -578,8 +593,10 @@ $ M_{Concordance} =\begin{pmatrix}
 8/13&5/13&-&8/13&9/13\\
 1/13&9/13&5/13&-&5/13\\
 8/13&5/13&9/13&8/13&-\\
-\end{pmatrix} $\\
-$ M_{Discordance} =\begin{pmatrix}
+\end{pmatrix}$
+\end{center}
+\begin{center}
+$M_{Discordance} =\begin{pmatrix}
 -&4/10&2/10&1.6/10&2/10\\
 1/10&-&3/10&2.4/10&1/10\\
 3/10&4/10&-&2/10&2/10\\
@@ -594,7 +611,14 @@ Dans un premier temps, on choisit les valeurs suivantes :
 $v= 0,1 = 1/10$}
 \end{center}
 En comparant les matrices de concordance et de discordance aux seuils s et v, on obtient le résultat ci-dessous :\\
-%Graphe à inserer
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.30]{../CR/src/Amine/1er.png}
+        \caption{
+           \label{fig} Resultats 1er Seuillage : Absence de solutions satisfaisantes
+        }
+    \end{center}
+\end{figure}
 L’ensemble {a,b,d,e,h} constitue le noyau. Ce seuillage est trop grossier et \textbf{non satisfaisant}.\\\\
 
 \emph{Deuxième seuillage :}\\
@@ -604,7 +628,14 @@ Nous modifions les valeurs du seuil de discordance et revoyons les valeurs du se
 $v= 0,2 = 2/10$}
 \end{center}
 En procédant de la même façon que pour le premier seuillage, on obtient le résultat suivant :\\
-% Graphe 3
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.25]{../CR/src/Amine/3eme.png}
+        \caption{
+           \label{fig} Resultats 2eme Seuillage 
+        }
+    \end{center}
+\end{figure}
 L’ensemble {a,b} constitue le noyau, nous procèderons à un dernier seuillage pour dégager la meilleure solution.\\\\
 
 \emph{Troisième seuillage :}\\
@@ -614,7 +645,14 @@ Nous modifions les valeurs du seuil de discordance :\\
 $v= 0,4 = 4/10$}
 \end{center}
 En procédant de la même façon que pour le deuxième seuillage, on obtient le résultat suivant :\\
-% Graphe 3
+\begin{figure}[H]
+   \begin{center}
+        \includegraphics[scale=0.25]{../CR/src/Amine/4eme.png}
+        \caption{
+           \label{fig} Resultats 3eme Seuillage 
+        }
+    \end{center}
+\end{figure}
 L’ensemble {a} constitue le noyau : \textbf{a est donc la meilleure solution} à ce problème.\\
 \newpage
 \section*{Annexe}
